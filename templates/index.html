@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">    
+<head>
+    <title>Healthcare Support Chatbot</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f7ff;
+            text-align: center;
+            padding: 50px;
+        }
+
+        .chatbox {
+            width: 600px;
+            max-width: 90%;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+        }
+
+        h1 {
+            color: #1769aa;
+        }
+
+        input {
+            width: 70%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        button {
+            padding: 12px 20px;
+            background-color: #1769aa;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        #response {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #eef5ff;
+            border-radius: 8px;
+            min-height: 30px;
+        }
+    * {
+    box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 15px;
+    }
+
+    .chatbox {
+        width: 100%;
+        max-width: 100%;
+        padding: 18px;
+    }
+
+    h1 {
+        font-size: 25px;
+    }
+
+    input {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    #response {
+        overflow-wrap: anywhere;
+        text-align: left;
+    }
+}    
+    </style>
+</head>
+
+<body>
+
+    <div class="chatbox">
+
+        <h1>Healthcare Support Chatbot</h1>
+
+        <p>Ask about appointments, OPD timings, doctors and hospital services.</p>
+
+        <input type="text" id="question" placeholder="Ask your question...">
+
+        <button onclick="sendMessage()">Send</button>
+
+        <div id="response">
+            Chatbot response will appear here.
+        </div>
+
+    </div>
+
+    <script>
+        function sendMessage() {
+
+            let question = document.getElementById("question").value;
+
+            fetch("/chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    question: question
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("response").innerHTML = data.answer;
+            });
+        }
+    </script>
+
+</body>
+</html>
